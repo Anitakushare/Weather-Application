@@ -8,16 +8,11 @@ const cWeather=document.getElementById("weather");
 const key='104b3a0575c5dafab770f17dd9dbd7b9';
 const url='https://api.openweathermap.org/data/2.5';
 
-const recentCity_container=document.getElementById("recent-cities");
-const recentCity=document.getElementById("recent_city");
+const recentCitiesContainer = document.getElementById('recent-cities-container');
+const recentCitiesSelect = document.getElementById('recent-cities');
 
-// console.log(recentCity_container);
 
-// const localCities=JSON.parse(localStorage.getItem('localCities')) || [];
-//update
-//updateRecentCities();
-
-search.addEventListener("submit",async (e)=>{
+search_button.addEventListener("click",async (e)=>{
     e.preventDefault();
 const cityInput=city.value.trim();
 if(cityInput){
@@ -29,6 +24,15 @@ else{
 }
 });
 
+recentCitiesSelect.addEventListener('change', async (e) => {
+    const selectedCity = e.target.value;
+   console.log(selectedCity);
+   
+    if (selectedCity) {
+        await fetchWeather(selectedCity);
+    }
+});
+
 async function fetchWeather(city){
     try{
         const current_weather= await fetch(`${url}/weather?q=${city}&appid=${key}&units=metric`);
@@ -38,6 +42,7 @@ async function fetchWeather(city){
         else{
             const get_currentWeather=await current_weather.json();
             displayWeather(get_currentWeather);
+            addCitytoLocalstorage(city);
         }
     }
     catch(error){
@@ -57,20 +62,37 @@ async function displayWeather(data) {
     document.getElementById("humidity").textContent=main.humidity;
 
          cWeather.classList.remove('hidden');
-
 }
 
-// function addCityToRecent(city) {
-//     if (!localCities.includes(city)) {
-//         localCities = [city, ...localCities.slice(0, 4)]; // Add city to the front and keep only 5
-//         localStorage.setItem('localcities', JSON.stringify(localCities));
-//         updateRecentCities();
-//     }
-// }
 
-// function updateRecentCities() {
-//     recentCity_container.classList.toggle('hidden', localCities.length === 0);
-//     recentCity.innerHTML = localCities
-//         .map(city => `<option value="${city}">${city}</option>`)
-//         .join('');
-// }
+function addCitytoLocalstorage(city) {
+    if (!recentCities.includes(city)) {
+        recentCities.unshift(city); // Add city to the start of the array
+        if (recentCities.length > 5) recentCities.pop(); // Limit to 5 cities
+        localStorage.setItem('recentCities', JSON.stringify(recentCities)); // Save to local storage
+        updateRecentCities(); // Refresh dropdown
+    }
+}
+
+function updateRecentCities() {
+    if (recentCities.length > 0) {
+        recentCitiesContainer.classList.remove('hidden');
+        recentCitiesSelect.innerHTML = '<option class="bg-transparent" value="">Select a city</option>'; // Default option
+        recentCities.forEach((city) => {
+            const option = document.createElement('option');
+            option.value = city;
+            option.textContent = city;
+            recentCitiesSelect.appendChild(option); // Append each city to the dropdown
+        });
+    } else {
+        recentCitiesContainer.classList.add('hidden'); // Hide dropdown if no cities
+    }
+}
+
+// Initialize recent cities dropdown on page load
+document.addEventListener('DOMContentLoaded', () => {
+    recentCities = JSON.parse(localStorage.getItem('recentCities')) || []; // Retrieve from local storage
+
+   updateRecentCities(); // Populate dropdown
+});
+
