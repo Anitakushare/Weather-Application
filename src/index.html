@@ -12,7 +12,7 @@
 
 </head>
 
-<body class="bg-violet-900">
+<body class="bg-cyan-950">
     <header class="bg-blue-600 h-16">
         <h1 class="text-white text-center text-4xl py-2 font-bold">Weather Dashboard</h1>
     </header>
@@ -37,7 +37,7 @@
                     <hr class="w-80 h-px my-8 bg-gray-500 border-0 dark:bg-gray-700">
                     <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-gray-200 left-1/2 dark:text-white dark:bg-gray-900">or</span>
                 </div
-                <div class=" my-4"><button
+                <div class=" my-4"><button id="btn2" 
                         class="rounded-lg bg-slate-800 py-1 px-2 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-xl focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none duration-300 cursor-pointer hover:shadow-gray-400 h-12 w-full"
                         type="button">
                         Use Current Location
@@ -58,27 +58,27 @@
     <section class="mx-w-7xl mx-auto h-[350px]" id="services">
         <div class="flex flex-col m-auto md:flex-row justify-center items-center md:gap-6 text-white my-12 ">
             <div
-                class="bg-transparent w-[400px] md:w-[400px] h-[350px] px-5 py-8 rounded-lg border border-purple shadow-[#5dadec3b] cursor-pointer shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400  ">
+                class="bg-transparent w-[350px] md:w-[350px] h-[350px] px-5 py-8 rounded-lg border border-purple shadow-[#5dadec3b] cursor-pointer shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400  ">
         <div class="flex flex-col justify-center items-center bg-yellow-700">
             <h2 class="text-2xl font-bold text-white" id="cLocation"></h2>
             <p class="text-white" id="date"></p>
         </div>
         <div class="flex flex-col items-center justify-center mt-4 mb-8">
             <div>
-                <img id="icon" alt="Weather Icon" class="w-16 h-16">
+                <img id="icon" alt="Weather Icon" class="w-24 h-24">
 
             </div>
             <div class="ml-4 flex flex-col items-center justify-center">
-                <span class="text-xl text-white"></span>
+                <span class="text-xl text-slate-600"></span>
                 <p id="temp" class="text-3xl font-bold text-white"></p>
-                <p id="desc" class="text-white"></p>
+                <p id="desc" class="text-slate-400"></p>
             </div>
 
 
         </div>
-        <div class="mt-10 flex justify-center items-center gap-10">
-            <p class="text-xl text-white"><i class="fa-solid fa-wind"></i> Wind: <span class="font-bold" id="wind"></span> m/s</p>
-            <p class="text-xl text-white"><i class="fa-solid fa-droplet"></i> Humidity: <span class="font-bold" id="humidity"></span>%</p>
+        <div class="mt-10 flex justify-center items-center gap-6">
+            <p class="text-lg text-white"><i class="fa-solid fa-wind"></i> Wind: <span class="font-bold" id="wind"></span> m/s</p>
+            <p class="text-lg text-white"><i class="fa-solid fa-droplet"></i> Humidity: <span class="font-bold" id="humidity"></span>%</p>
         </div>
 </div>
 </div>
