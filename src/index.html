@@ -12,15 +12,15 @@
 
 </head>
 
-<body class="bg-cyan-950">
-    <header class="bg-blue-600 h-16">
+<body class="bg-gradient-to-t from-gray-500 to-gray-950 ">
+    <header class="bg-blue-800 h-16">
         <h1 class="text-white text-center text-4xl py-2 font-bold">Weather Dashboard</h1>
     </header>
-    <main>
-    <section class="mx-w-7xl mx-auto h-[450px]" id="services">
+    <main class="grid grid-cols-3 grid-row-2">
+    <section class="mx-w-7xl mx-auto h-[450px] col-span-3 row-span-1" id="services">
         <div class="flex flex-col m-auto md:flex-row justify-center items-center md:gap-6 text-white my-12 ">
             <div
-                class="bg-transparent w-[400px] md:w-[400px] h-[450px] px-5 py-8 rounded-lg border border-purple shadow-[#5dadec3b] cursor-pointer shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400  ">
+                class="bg-transparent w-[400px] md:w-[400px] h-[450px] px-5 py-8 rounded-lg border border-purple shadow-[#5dadec3b] shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400  ">
                 <form id="search-form" class="flex flex-col justify-center gap-5">
                     <label class="text-white font-bold text-xl" for="city">Enter City Name:</label>
                     <input 
@@ -35,10 +35,10 @@
                 </form>
                 <div class="inline-flex items-center justify-center w-full">
                     <hr class="w-80 h-px my-8 bg-gray-500 border-0 dark:bg-gray-700">
-                    <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-gray-200 left-1/2 dark:text-white dark:bg-gray-900">or</span>
+                    <span class="absolute px-3 font-medium text-gray-900  bg-gray-200  dark:text-white dark:bg-gray-900">or</span>
                 </div
                 <div class=" my-4"><button id="btn2" 
-                        class="rounded-lg bg-slate-800 py-1 px-2 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-xl focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none duration-300 cursor-pointer hover:shadow-gray-400 h-12 w-full"
+                        class="rounded-lg bg-slate-800 py-1 px-2 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow-xl focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 h-12 w-full"
                         type="button">
                         Use Current Location
                 </button>
@@ -46,7 +46,7 @@
                 <div id="recent-cities-container" class=" hidden flex flex-row justify-center items-center gap-5">
                     <label for="recent-cities" class=" justify-center text-white font-bold text-lg mb-2 mt-7">Recently Searched Cities:</label>
                     <select id="recent-cities" class="p-2 mb-2 mt-7 border rounded-md focus:outline-none focus:ring focus:ring-blue-300 text-gray-200 bg-transparent"><i class="fa-regular fa-square-caret-down"></i>
-                        <!-- Options populated dynamically -->
+                        <!-- Options -->
                     </select>
                 </div>
 
@@ -55,11 +55,11 @@
 
     </section>
     <!-- Current Weather Section -->
-    <section class="mx-w-7xl mx-auto h-[350px]" id="services">
-        <div class="flex flex-col m-auto md:flex-row justify-center items-center md:gap-6 text-white my-12 ">
+    <section class="h-[375px] mb-7 row-span-2 col-span-1" id="services">
+        <div id="weather" class="flex flex-col  md:flex-row justify-center items-center md:gap-6 text-white my-16 ">
             <div
-                class="bg-transparent w-[350px] md:w-[350px] h-[350px] px-5 py-8 rounded-lg border border-purple shadow-[#5dadec3b] cursor-pointer shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400  ">
-        <div class="flex flex-col justify-center items-center bg-yellow-700">
+                class="bg-transparent w-[350px] md:w-[350px] h-[350px] py-8 rounded-lg border border-purple shadow-[#5dadec3b] cursor-pointer shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400  ">
+        <div class="flex flex-col justify-center items-center bg-blue-900">
             <h2 class="text-2xl font-bold text-white" id="cLocation"></h2>
             <p class="text-white" id="date"></p>
         </div>
@@ -68,7 +68,7 @@
                 <img id="icon" alt="Weather Icon" class="w-24 h-24">
 
             </div>
-            <div class="ml-4 flex flex-col items-center justify-center">
+            <div class="flex flex-col items-center justify-center">
                 <span class="text-xl text-slate-600"></span>
                 <p id="temp" class="text-3xl font-bold text-white"></p>
                 <p id="desc" class="text-slate-400"></p>
@@ -76,13 +76,22 @@
 
 
         </div>
-        <div class="mt-10 flex justify-center items-center gap-6">
-            <p class="text-lg text-white"><i class="fa-solid fa-wind"></i> Wind: <span class="font-bold" id="wind"></span> m/s</p>
-            <p class="text-lg text-white"><i class="fa-solid fa-droplet"></i> Humidity: <span class="font-bold" id="humidity"></span>%</p>
+        <div class="mt-10 flex justify-center items-center gap-4">
+            <p class="text-lg text-white"><i class="fa-solid fa-wind"></i> Wind : <span class="font-bold" id="wind"></span> m/s</p>
+            <p class="text-lg text-white"><i class="fa-solid fa-droplet"></i> Humidity : <span class="font-bold" id="humidity"></span>%</p>
         </div>
 </div>
 </div>
-
+    </section>
+    <section class="mx-w-7xl h-[400px] row-span-2 col-span-2 my-6 mx-4" id="services">
+         <!--Forecast Section -->
+         <div id="forecast-container" class="w-full max-w-6xl bg-blue-900 mt-12 p-6">
+            <h3 class="text-xl font-bold text-white mb-4">5-Day Forecast</h3>
+            <div id="forecast-cards" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full " >
+                <!-- Cards -->
+            </div>
+        </div>
+    </div>
     </section>
 </main>
     <script src="script.js"></script>
