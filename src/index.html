@@ -15,7 +15,7 @@
 <body class="bg-gray-400">
      <!-- Header Section -->
     <header class="bg-blue-950 h-16">
-        <h1 class="text-white text-center text-2xl md:text-4xl py-2 font-bold">Weather Dashboard</h1>
+        <h1 class=" text-center text-2xl md:text-4xl py-2 font-bold bg-gradient-to-t from-blue-400 to-white text-transparent bg-clip-text">Weather Dashboard</h1>
     </header>
     <main class="flex flex-col md:flex-col lg:flex-row items-strat  md:justify-center md:mx-auto gap-8 px-4 py-10">
         <section class="w-full max-w-lg md:max-w-4xl h-auto" id="services1">
@@ -26,9 +26,7 @@
                         <label class="text-white font-bold text-xl" for="city">Enter City Name:</label>
                         <input type="text" id="city" placeholder="Eg: Delhi,Paris,New York"
                             class="p-3 border rounded-lg focus:outline-none  bg-transparent" name="city">
-                            <div id="error-message" class="hidden bg-red-200 text-red-800 p-4 rounded">
-                                <!-- Error messages will appear here -->
-                              </div>
+            
                         <button id="btn1"
                             class="bg-blue-900 text-white py-3.5 px-3 rounded-lg hover:bg-blue-800 focus:outline-none ">
                             Search
@@ -45,13 +43,12 @@
                     </button>
 
                     <div id="recent-cities-container"
-                        class=" hidden flex flex-col justify-center items-center gap-5 bg-transparent h-auto">
+                        class=" hidden flex justify-center items-center gap-5 bg-transparent h-auto mt-6">
                         <label for="recent-cities"
-                            class=" justify-center text-white font-bold text-lg mb-2 md:mb-0 mt-7">Recently Searched
+                            class="  text-white font-bold md:text-lg sm:text-sm mb-2 md:mb-0">Recently Searched
                             Cities:</label>
-                        <select id="recent-cities"
-                            class="p-2 mb-2 md:mb-0 mt-7 md:mt-0 border rounded-md focus:outline-none  text-gray-200 bg-gray-900"><i
-                                class="fa-regular fa-square-caret-down"></i>
+                        <select id="recent-cities" size="5"
+                            class="p-2 mb-2 md:mb-0  md:mt-0 border rounded-md focus:outline-none  text-gray-200 bg-gray-900 max-h-8 overflow-y-scroll">
                             <!-- Options -->
                         </select>
                     </div>

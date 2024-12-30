@@ -5,18 +5,14 @@ const search = document.getElementById("search");
 
 const cWeather = document.getElementById("weather");
 const errorMessage=document.getElementById("error-message");
-
-const key = "104b3a0575c5dafab770f17dd9dbd7b9";
-const url = "https://api.openweathermap.org/data/2.5";
-
-const recentCitiesContainer = document.getElementById(
-  "recent-cities-container"
-);
+const recentCitiesContainer = document.getElementById("recent-cities-container");
 const recentCitiesSelect = document.getElementById("recent-cities");
 
 const forecastContainer = document.getElementById("forecast-container");
 const forecastCards= document.getElementById("forecast-cards");
 
+const key = "104b3a0575c5dafab770f17dd9dbd7b9";
+const url = "https://api.openweathermap.org/data/2.5";
 
 //Event Listener for search weather according to city Name
 search_button.addEventListener("click", async (e) => {
@@ -178,7 +174,6 @@ function updateRecentCities() {
       const option = document.createElement("option");
       option.value = city;
       option.textContent = city;
-      option.classList.add("bg-transparent")
       recentCitiesSelect.appendChild(option); // Append each city to the dropdown
     });
   } else {
