@@ -4,6 +4,7 @@ const city = document.getElementById("city");
 const search = document.getElementById("search");
 
 const cWeather = document.getElementById("weather");
+const errorMessage=document.getElementById("error-message");
 
 const key = "104b3a0575c5dafab770f17dd9dbd7b9";
 const url = "https://api.openweathermap.org/data/2.5";
@@ -16,17 +17,16 @@ const recentCitiesSelect = document.getElementById("recent-cities");
 const forecastContainer = document.getElementById("forecast-container");
 const forecastCards= document.getElementById("forecast-cards");
 
+
+//Event Listener for search weather according to city Name
 search_button.addEventListener("click", async (e) => {
   e.preventDefault();
   const cityInput = city.value.trim();
-  if (!cityInput) {
-    alert("Enter Valid City Name");
-    return;
-  } 
+  if (!cityInput) throw new Error("Enter Vlid City Name");
   await fetchWeather(cityInput);
             city.value = '';
 });
-
+//Event Listener for search weather using current Location
 currentLocation_button.addEventListener("click", async () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -45,7 +45,7 @@ currentLocation_button.addEventListener("click", async () => {
     alert("Geolocation is not supported by your browser.");
   }
 });
-
+//Event Listener for search weather according to Recent Searcher city
 recentCitiesSelect.addEventListener("change", async (e) => {
   const selectedCity = e.target.value;
   //console.log(selectedCity);
@@ -55,11 +55,13 @@ recentCitiesSelect.addEventListener("change", async (e) => {
   }
 });
 
+  //Function to fetch data using Weather Api and Key 
 async function fetchWeather(city) {
   try {
     const current_weather = await fetch(`${url}/weather?q=${city}&appid=${key}&units=metric`);
-    if (!current_weather.ok) throw new Error("City not Found");
-
+    if (!current_weather.ok){
+      throw new Error("City not found. Please check the spelling and try again.");
+    }
     const get_currentWeather = await current_weather.json();
     displayWeather(get_currentWeather);
     addCitytoLocalstorage(city);
@@ -69,7 +71,8 @@ async function fetchWeather(city) {
       `${url}/forecast?q=${city}&appid=${key}&units=metric`
     );
    
-    if (!forecastRes.ok) throw new Error("Error fetching forecast data");
+    if (!forecastRes.ok) 
+      throw new Error("Error fetching forecast data");
     const forecastData = await forecastRes.json();
     getFiveDayForecast(forecastData);
     
@@ -78,12 +81,12 @@ async function fetchWeather(city) {
     alert(error.message);
   }
 }
-
+//function for display weather data
 async function displayWeather(data) {
   const { name, sys, weather, wind, main } = data;
   const iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
-  document.getElementById("cLocation").textContent = `${name}, ${sys.country}`;
-  document.getElementById("date").textContent = new Date().toLocaleDateString();
+  document.getElementById("cLocation").textContent = `${name},${sys.country}`;
+  document.getElementById("date").textContent = "(" + new Date().toLocaleDateString() +")";
   document.getElementById("temp").textContent = `${main.temp}°C`;
   document.getElementById("icon").src = iconUrl;
   document.getElementById("desc").textContent = weather[0].description;
@@ -91,27 +94,28 @@ async function displayWeather(data) {
   document.getElementById("humidity").textContent = main.humidity;
 
   cWeather.classList.remove("hidden");
+  document.getElementById("weather-section").classList.remove("hidden");
 }
-
+//function to fetch 5 days forcast 
  async function getFiveDayForecast(data) {
   forecastCards.innerHTML = "";
   const forecasts = data.list.filter((item) =>
     item.dt_txt.endsWith("12:00:00")
   );
-
+ 
   forecasts.forEach((forecast) => {
     const { dt_txt, weather, main, wind } = forecast;
     const iconUrl = `http://openweathermap.org/img/wn/${weather[0].icon}@2x.png`;
 
     const card = document.createElement("div");
-    card.className = "bg-blue-950 text-white w-full p-4 text-center rounded-lg border border-purple shadow-[#5dadec3b] shadow-xl transition-shadow duration-300 hover:shadow-lg hover:shadow-gray-400 ";
+    card.className = "bg-blue-950 flex flex-col sm:flex-row justify-center items-center h-auto gap-4 sm:gap-6 md:gap-8 text-white w-full max-w-3xl p-2 sm:p-4 rounded-lg border border-purple shadow-[#5dadec3b] shadow-lg ";
     card.innerHTML = `
                 <p class="font-bold">${new Date(
                   dt_txt 
                 ).toLocaleDateString()}</p>
                 <img src="${iconUrl}" alt="${
       weather[0].description
-    }" class="mx-auto w-16 h-16">
+    }" class=" w-16 h-16">
                 <p class="text-lg font-bold">${main.temp}°C</p>
                 <p><i class="fa-solid fa-wind"></i> : ${wind.speed} m/s</p>
                  <p><i class="fa-solid fa-droplet"></i> : ${main.humidity}%</p>
@@ -121,7 +125,7 @@ async function displayWeather(data) {
 
   forecastContainer.classList.remove("hidden");
 }
-
+//function to fecth weather of current location
 async function getWeatherByCurrentLoction(latitude, longitude) {
   try {
     // Fetch Weather using current Location
@@ -144,32 +148,37 @@ async function getWeatherByCurrentLoction(latitude, longitude) {
 
     const forecastData = await forecastRes.json();
     getFiveDayForecast(forecastData);
+     // Add city name to recent cities
     addCitytoLocalstorage(currentWeatherData.name);
 
-    // Add city name to recent cities
+   
   } catch (error) {
     alert(error.message);
   }
 }
 
+
+
+// add city to local storage
 function addCitytoLocalstorage(city) {
   if (!recentCities.includes(city)) {
     recentCities.unshift(city); // Add city to the start of the array
-    if (recentCities.length > 5) recentCities.pop(); // Limit to 5 cities
+    if(recentCities.length>6) recentCities.pop();
     localStorage.setItem("recentCities", JSON.stringify(recentCities)); // Save to local storage
     updateRecentCities(); // Refresh dropdown
   }
 }
-
+//update recent Cities
 function updateRecentCities() {
   if (recentCities.length > 0) {
     recentCitiesContainer.classList.remove("hidden");
     recentCitiesSelect.innerHTML =
-      '<option class="bg-transparent" value="">Select a city</option>'; // Default option
+      '<option class="value="">Select a city</option>'; // Default option
     recentCities.forEach((city) => {
       const option = document.createElement("option");
       option.value = city;
       option.textContent = city;
+      option.classList.add("bg-transparent")
       recentCitiesSelect.appendChild(option); // Append each city to the dropdown
     });
   } else {
